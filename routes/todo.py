@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, session, render_template
 from flask_smorest import Blueprint, abort
 from flask.views import MethodView
 from database import db
@@ -10,19 +10,17 @@ todos_blp = Blueprint("todo", __name__, description = "Routes for items")
 
 @todos_blp.route('/todo')
 class TodoResource(MethodView):
-    
-    @todos_blp.arguments(TodoGetSchema, location = 'query')
+
     @todos_blp.response(200, TodoDisplay(many=True))
-    def get(self, args):
-            id = args.get('id')
-            if id is None:
-                todos = Todo.query.all()
-                return todos
-            id = int(id)
-            todo = Todo.query.filter_by(sno = id).first()
-            if todo:
-                return [todo]
-            abort(400, message= "Task doesn't Exists")
+    def get(self):
+            
+            user_id = session.get("user_id")
+
+            if not user_id:
+                 abort(401, message="Login Required")
+            
+            todos = Todo.query.filter_by(user_id=user_id).all()
+            return todos
 
     @todos_blp.arguments(TodoPostSchema)
     @todos_blp.response(200, TodoMessage)

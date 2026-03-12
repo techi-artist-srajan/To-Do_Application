@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect,url_for
+from flask import Flask, render_template, request, redirect, url_for
 # from models import Todo, Users
 from database import db
 from flask_smorest import Api
 from routes.todo import todos_blp
 from routes.user import user_blp
+from routes.pages import pages_blp
 
 app=Flask(__name__)
 app.config["API_TITLE"] = "My Store API"
@@ -15,23 +16,26 @@ app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///todo.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.secret_key = "supersecretkey123"
+app.config["SECRET_KEY"] = "supersecretkey123"
 
 db.init_app(app)
 
-@app.route("/")
-def home():
-    return render_template("index.html")
+# @app.route("/")
+# def home():
+#     return render_template("index.html")
 
-@app.route("/login")
-def login():
-    return render_template("login.html")
+# @app.route("/login")
+# def login():
+#     return render_template("login.html")
 
-@app.route("/update")
-def update():
-    return render_template("update.html")
+# @app.route("/update")
+# def update():
+#     return render_template("update.html")
 
 api = Api(app)
 
+app.register_blueprint(pages_blp)
 api.register_blueprint(todos_blp)
 api.register_blueprint(user_blp)
 
