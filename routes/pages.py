@@ -1,6 +1,7 @@
 from flask import request, jsonify, Blueprint, redirect, render_template, session
 from database import db
 from models.users_model import Users
+from models.todo_model import Todo
 
 pages_blp = Blueprint("pages", __name__)
 
@@ -27,7 +28,10 @@ def todo_page():
 
     if not user_id:
         return redirect("/login")
-    return render_template('index.html')
+    
+    # todos= TodoResource.get()
+    todos = Todo.query.filter_by(user_id = user_id).all()
+    return render_template('index.html', allTodo = todos)
 
 @pages_blp.route("/logout")
 def logout():
@@ -40,6 +44,7 @@ def logout():
 def home():
     return render_template('index.html')
 
-@pages_blp.route('/update')
-def update():
-    return render_template('update.html')
+@pages_blp.route('/update/<int:id>')
+def update(id):
+
+    return render_template('update.html',todo_id=id)

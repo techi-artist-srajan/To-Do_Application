@@ -4,3 +4,4 @@ flaskenv/
 .flaskenv
 __pycache__/
 setup.txt
+*.txt
