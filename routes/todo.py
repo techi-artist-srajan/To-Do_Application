@@ -25,7 +25,7 @@ class TodoResource(MethodView):
     @todos_blp.arguments(TodoPostSchema)
     @todos_blp.response(200, TodoMessage)
     def post(self, data):
-        new_todo = Todo(title = data.get("todo"), description = data.get("description"), date_created = datetime.now().date(), user_id = 1)
+        new_todo = Todo(title = data.get("todo"), description = data.get("description"), date_created = datetime.now().date(), user_id = session.get("user_id"))
         try:
              db.session.add(new_todo)
              db.session.commit()

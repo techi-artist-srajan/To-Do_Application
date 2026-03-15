@@ -4,7 +4,7 @@
 
     <div class="container my-3">
         <h2>Add Your Todo's</h2>
-        <form id="todo-form">
+        <form id="add-todo-form">
             <div class="mb-3">
                 <label for="title" class="form-label">Todo Title</label>
                 <input type="text" class="form-control" name="title" id="title">
@@ -16,6 +16,29 @@
             <button type="submit" class="btn btn-info">Submit</button>
         </form>
     </div>
+    <script>
+        document.getElementById("add-todo-form").addEventListener('submit', async function(e){
+            
+            e.preventDefault()
+
+            const title = document.getElementById('title').value
+            const desc = document.getElementById('desc').value
+
+            const res = await fetch("/todo", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    todo: title,
+                    description: desc
+                })
+            })
+            const data = await res.json()
+            console.log(data.msg)
+            window.location.reload()
+        })
+    </script>
 
     <div class="container my-3">
         <table class="table">

@@ -40,11 +40,13 @@ def logout():
 
     return redirect("/login")
 
-@pages_blp.route('/')
-def home():
-    return render_template('index.html')
 
 @pages_blp.route('/update/<int:id>')
 def update(id):
+    todo = Todo.query.filter_by(sno=id).first()
+    return render_template('update.html',todo=todo)
 
-    return render_template('update.html',todo_id=id)
+
+@pages_blp.route("/")
+def home():
+    return render_template("landing_page.html")
