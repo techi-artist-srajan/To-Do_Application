@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %} Update {% endblock title %}
+{% block body %}
+
+<div class="container my-3">
+    <h2>Update Todo</h2>
+    <form id="updatePassword">
+    <div class="mb-3">
+        </br>
+            <label for="username" class="fw-medium fs-2" id="username" name="username">{{ username }}</label>
+        </div>
+        <div class="mb-3">
+            <label for="desc" class="form-label">Update Password</label>
+            <input type="password" class="form-control" name="new_password" id="new_password">
+        </div>
+        <div class="mb-3">
+            <label for="desc" class="form-label">Update Password</label>
+            <input type="password" class="form-control" name="confirm_new_password" id="confirm_new_password">
+        </div>
+        <small id="message" style="margin:auto;"></small>
+        <div id="btn-grp">
+            <a class="btn btn-info" href="{{ url_for('pages.todo_page') }}">Back</a>
+            <button type="submit" class="btn btn-info">Change Password</button>
+        </div>
+    </form>
+</div>
+<style>
+    #btn-grp{
+        display: flex;
+        margin-top: 2rem;
+        gap:2rem;
+    }
+</style>
+<script>
+// form submission
+document.querySelector("form").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const username = document.querySelector("[name='username']").textContent;
+    const password = document.querySelector("[name='new_password']").value;
+    const confirmPassword = document.querySelector("[name='confirm_new_password']").value;
+    const messageBox = document.getElementById("message");
+
+    // Basic validation
+    if (password !== confirmPassword) {
+        messageBox.innerText = "Passwords do not match";
+        messageBox.style.color = "red";
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/users", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            messageBox.innerText = data.message;
+            messageBox.style.color = "red";
+            return;
+        }
+
+        messageBox.innerText = data.message;
+        messageBox.style.color = "green";
+
+        window.location.href = "/todos";
+
+    } catch (error) {
+        console.error(error);
+        messageBox.innerText = "Something went wrong!";
+        messageBox.style.color = "red";
+    }
+});
+</script>
+
+{% endblock body %}

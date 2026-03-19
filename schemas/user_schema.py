@@ -11,6 +11,5 @@ class MessageSchema(Schema):
     msg = fields.String(required=True)
 
 class UserPutSchema(Schema):
-    id = fields.Int(required=True)
     username = fields.String(required=True)
     password = fields.String(required=True, load_only=True)

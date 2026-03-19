@@ -14,10 +14,19 @@
             <label for="desc" class="form-label">Update Description</label>
             <input type="text" class="form-control" name="description" value="{{todo.description}}" id="desc">
         </div>
-        <button type="submit" class="btn btn-info">Update</button>
+        <div id="btn-grp">
+            <a class="btn btn-info" href="{{ url_for('pages.todo_page') }}">Back</a>
+            <button type="submit" class="btn btn-info">Update</button>
+        </div>
     </form>
 </div>
-
+<style>
+    #btn-grp{
+        display: flex;
+        margin-top: 2rem;
+        gap:2rem;
+    }
+</style>
 <script>
 
 document.getElementById("updateForm").addEventListener("submit", async function(e){
@@ -26,9 +35,9 @@ document.getElementById("updateForm").addEventListener("submit", async function(
 
     const title = document.getElementById("title").value
     const description = document.getElementById("desc").value
-    const id = {{todo.sno}}
+    const id = {{ todo.sno }}
 
-    const response = await fetch(`/todo?id=${id}`, {
+    const response = await fetch(`/api/todo/?id=${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"

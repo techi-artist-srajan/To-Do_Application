@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for
-# from models import Todo, Users
 from database import db
 from flask_smorest import Api
 from routes.todo import todos_blp

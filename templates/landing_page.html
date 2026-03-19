@@ -2,6 +2,63 @@
 {% block title %} Home {% endblock title %}
 {% block body %}
 
-<h3> Welcome to todo application </h3>
+<div class="top-part">
+     <div class="side-img-layout">
+      <img src="{{ url_for('static', filename='side-image.jpg') }}" class="d-block w-100" alt="Image Source">
+    </div>
+    <div id="btn-layout">
+    <a class="btn btn-primary" style="width:10rem !important; color: white;" href="{{ url_for('pages.login') }}">Login</a>
+    <a class="btn btn-primary" style="width:10rem !important; color: white;" href="{{ url_for('pages.register') }}">Register Now</a>
+    </div>
+</div>
+
+<style>
+    .top-part{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10rem;
+        margin-top: 10rem;
+        /* padding-right: 1rem; */
+    }
+
+    #btn-layout{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+</style>
+
+
+
+<div id="carouselExampleFade" class="carousel slide carousel-dark">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{{ url_for('static', filename='img1.jpg') }}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<style>
+    #carouselExampleFade {
+        width: 40%;
+        margin: auto;
+        margin-top:5rem;
+    }
+</style>
 
 {% endblock body %}
